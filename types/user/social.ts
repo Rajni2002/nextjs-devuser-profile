@@ -7,9 +7,9 @@ type InstagramLink = `https://instagram.com/${username}`;
 type BehanceLink = `https://www.behance.net${username}`;
 
 export type Social = {
-    github: GithubLink;
-    linkedin: LinkedInLink;
-    facebook: FacebookLink;
-    instagram: InstagramLink;
-    behance: BehanceLink;
+    github?: GithubLink;
+    linkedin?: LinkedInLink;
+    facebook?: FacebookLink;
+    instagram?: InstagramLink;
+    behance?: BehanceLink;
 }

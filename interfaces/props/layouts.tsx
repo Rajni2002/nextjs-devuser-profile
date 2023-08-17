@@ -1,3 +1,3 @@
-export interface TestLayout {
+export interface ChidrenPropType {
   children: React.ReactNode
 }

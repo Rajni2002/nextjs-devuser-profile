@@ -9,8 +9,8 @@ type SectionVisibility = {
 export type Profile = {
     displayName: string;
     about: string;
-    profession: "Student" | "Developer" | "Other";
-    dob: Date;
-    Gender: Gender;
+    profession?: "Student" | "Developer" | "Other";
+    dob?: Date;
+    Gender?: Gender;
     visibility: SectionVisibility
 }
