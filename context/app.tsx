@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { ChidrenPropType } from "@/interfaces/props/layouts";
+import ChidrenPropType from "@/interfaces/props/layouts";
 import { User as AppState } from "@/interfaces/user";
 import { Action, ActionTypes, initialState } from './app.reducer';
 

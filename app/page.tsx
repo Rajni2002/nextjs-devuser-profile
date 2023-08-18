@@ -1,19 +1,16 @@
 "use client"
-import Button from '@/components/ui/button';
-import { useGlobalContext } from '@/context/app'
+import { Button, CircularLoading, Toggle } from '@/components/ui';
+import { useState } from 'react';
 
 export default function Home() {
-  const [state, dispatch] = useGlobalContext();
+  const [state, setState] = useState<boolean>(false);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Button buttonType='primary' onClick={() => {
-        // dispatch({
-        //   type: ActionTypes.SET_PROFILE,
-        //   payload: {
-        //     displayName: "Rajnikant dash"
-        //   }
-        // })
-      }}>Initialize state</Button>
+    <main className="flex min-h-screen flex-col items-center justify-evenly p-24">
+      <Toggle state={state} clickHandler={()=>{
+        setState(prev => !prev)
+      }}/>
+      <Button>Click me</Button>
+      <CircularLoading />
     </main>
   )
 }

@@ -1,3 +1,3 @@
-export interface ChidrenPropType {
+export default interface ChidrenPropType {
   children: React.ReactNode
 }

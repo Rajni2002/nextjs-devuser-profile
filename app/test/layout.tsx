@@ -1,4 +1,4 @@
-import { ChidrenPropType } from '@/interfaces/props/layouts';
+import ChidrenPropType from '@/interfaces/props/layouts';
 import React, { Suspense } from 'react';
 import Loading from './loading';
 
