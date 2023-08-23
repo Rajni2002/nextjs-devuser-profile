@@ -2,6 +2,6 @@
 import { useRouter } from 'next/navigation';
 const App = () => {
     const router = useRouter();
-    return router.push("/profile")
+    return router.push("/edit/profile")
 };
 export default App;

@@ -2,6 +2,7 @@ import GlobalContext from '@/context/app'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Navbar from '@/components/navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,8 @@ export default function RootLayout({
   return (
     <GlobalContext>
       <html lang="en">
-        <body className={inter.className}>
+        <body className="flex min-h-screen flex-col sm:p-12 p-0">
+          <Navbar/>
           {children}
           <div id='modal'></div>
           <div id='toast'></div>
