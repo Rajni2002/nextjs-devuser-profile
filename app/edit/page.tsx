@@ -1,7 +1,8 @@
 "use client";
 import { useRouter } from 'next/navigation';
-const App = () => {
+const Edit = () => {
     const router = useRouter();
-    return router.push("/edit/profile")
+    router.push("/edit/profile")
+    return null;
 };
-export default App;
+export default Edit;

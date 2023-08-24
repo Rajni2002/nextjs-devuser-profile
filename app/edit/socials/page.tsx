@@ -1,9 +1,11 @@
 import React from 'react';
 
-const Social = () => {
+const Page = () => {
     return (
-        <h2>Social</h2>
+        <>
+            Socials
+        </>
     );
 };
 
-export default Social;
+export default Page;
