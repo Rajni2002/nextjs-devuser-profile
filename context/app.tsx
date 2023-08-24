@@ -4,19 +4,19 @@ import ChidrenPropType from "@/interfaces/props/layouts";
 import { User as AppState } from "@/interfaces/user";
 import { Action, ActionTypes, initialState } from './app.reducer';
 
-type ContextType = [AppState | {}, (action: Action) => void];
+type ContextType = [AppState, (action: Action) => void];
 
-const AppContext = createContext<ContextType>([{}, () => { }]);
+const AppContext = createContext<ContextType>([initialState, () => { }]);
 
 const GlobalContext = ({ children }: ChidrenPropType) => {
-    const [appState, setAppState] = useState<AppState | {}>({});
+    const [appState, setAppState] = useState<AppState>(initialState);
 
     /* Try to fix this and bring actual useReducer */
     const dispatch = ({ type, payload }: Action) => {
         switch (type) {
             case ActionTypes.SET_PROFILE:
                 setAppState(prev => {
-                    return { ...prev, profile: { ...payload } }
+                    return { ...prev, profile: payload }
                 })
                 break;
 
@@ -38,7 +38,7 @@ const GlobalContext = ({ children }: ChidrenPropType) => {
 
     /* Syncing the localStorage and global Context */
     useEffect(() => {
-        let payload: AppState;
+        let payload;
         if (localStorage.getItem("state")) {
             //checking if there already is a state in localstorage
             //if yes, update the current state 

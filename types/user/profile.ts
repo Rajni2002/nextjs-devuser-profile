@@ -6,11 +6,13 @@ type SectionVisibility = {
     badges: boolean;
 }
 
+
 export type Profile = {
+    profilePic: File | null;
     displayName: string;
     about: string;
     profession?: "Student" | "Developer" | "Other";
-    dob?: Date;
+    dob: Date;
     Gender?: Gender;
     visibility: SectionVisibility
 }

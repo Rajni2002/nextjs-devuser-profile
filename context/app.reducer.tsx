@@ -1,4 +1,8 @@
 import { User as AppState } from "@/interfaces/user";
+import { Portfolio } from "@/types/user/portfolio";
+import { Profile } from "@/types/user/profile";
+import { Resume } from "@/types/user/resume";
+import { Social } from "@/types/user/social";
 
 export const initialState: AppState = {
     profile: {
@@ -8,7 +12,9 @@ export const initialState: AppState = {
             follwers_and_following: false,
             xp: false,
             badges: false
-        }
+        },
+        profilePic: null,
+        dob: new Date()
     },
     socials: {
     },
@@ -34,7 +40,7 @@ export enum ActionTypes {
 /* Pending */
 export type Action = {
     type: ActionTypes;
-    payload: object;
+    payload: Profile | Social | Portfolio | Resume;
 }
 
 export const dispatch = (state: AppState, action: Action) => {
