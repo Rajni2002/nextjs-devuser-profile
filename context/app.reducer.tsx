@@ -1,8 +1,5 @@
 import { User as AppState } from "@/interfaces/user";
-import { Portfolio } from "@/types/user/portfolio";
 import { Profile } from "@/types/user/profile";
-import { Resume } from "@/types/user/resume";
-import { Social } from "@/types/user/social";
 
 export const initialState: AppState = {
     profile: {
@@ -40,10 +37,5 @@ export enum ActionTypes {
 /* Pending */
 export type Action = {
     type: ActionTypes;
-    payload: Profile | Social | Portfolio | Resume;
+    payload: Profile;
 }
-
-export const dispatch = (state: AppState, action: Action) => {
-    console.log(state, action);
-
-};
