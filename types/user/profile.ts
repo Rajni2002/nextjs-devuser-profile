@@ -1,5 +1,3 @@
-export enum Gender { Male, Female };
-
 type SectionVisibility = {
     follwers_and_following: boolean;
     xp: boolean;
@@ -13,6 +11,6 @@ export type Profile = {
     about: string;
     profession?: "Student" | "Developer" | "Other";
     dob: Date;
-    Gender?: Gender;
+    Gender?: "Male" | "Female";
     visibility: SectionVisibility
 }

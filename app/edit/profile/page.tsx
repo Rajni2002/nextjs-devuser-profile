@@ -1,16 +1,22 @@
 "use client"
 import ProfileInputs from '@/components/profile-inputs';
+import { Button } from '@/components/ui';
+import ToggleLabel from '@/components/ui/toggle-labels';
 import UploadPic from '@/components/upload-picture';
 import { useGlobalContext } from '@/context/app';
-import { useLog } from '@/lib/hooks/use-log';
+import { ActionTypes } from '@/context/app.reducer';
 import { Profile } from '@/types/user/profile';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SelectSingleEventHandler } from 'react-day-picker';
 
 const Page = () => {
-    const [appState] = useGlobalContext();
+    const [appState, dispatch] = useGlobalContext();
     const [profile, setProfile] = useState<Profile>(() => appState?.profile);
-    useLog(profile);
+
+    useEffect(() => {
+        setProfile(appState?.profile)
+    }, [appState])
+
     const setDate: SelectSingleEventHandler = (selectedDay) => {
         setProfile((prev) => ({
             ...prev,
@@ -31,10 +37,76 @@ const Page = () => {
             profilePic: files ? files[0] : null
         }))
     }
+    const resetProfileImage = () => {
+        setProfile(prev => ({
+            ...prev,
+            profilePic: null
+        }))
+    }
+    const handleGenderInput = (value: string) => {
+        setProfile((prev) => ({
+            ...prev,
+            Gender: value === "Male" ? "Male" : "Female"
+        }))
+    }
+
+    const saveChanges = () => {
+        dispatch({
+            type: ActionTypes.SET_PROFILE,
+            payload: profile
+        })
+    }
+
+    const toggleArray: {
+        visibityKey: string;
+        header: string;
+        sub_heading: string;
+    }[] = [
+            {
+                visibityKey: "follwers_and_following",
+                header: 'Followers and following',
+                sub_heading: 'Shows your followers and the users you follow on codedamn'
+            },
+            {
+                visibityKey: "xp",
+                header: 'XP',
+                sub_heading: "Shows the XP you have earned"
+            },
+            {
+                visibityKey: "badges",
+                header: 'Achievement badges',
+                sub_heading: "Shows your relative percentile and proficiency"
+            },
+        ]
+
     return (
-        <div className='sm:px-20 sm:py-0 p-4'>
-            <UploadPic onProfilePicChange={onProfilePicChange} avatarFile={profile.profilePic}/>
-            <ProfileInputs profile={profile} setDate={setDate} onInputChange={onInputChange} />
+        <div className='sm:px-20 sm:py-0 p-4 mb-4'>
+            <UploadPic onProfilePicChange={onProfilePicChange} avatarFile={profile.profilePic} resetProfileImage={resetProfileImage}/>
+            <ProfileInputs profile={profile} setDate={setDate} onInputChange={onInputChange} handleGenderInput={handleGenderInput}/>
+            <h1 className='font-bold mt-16 text-lg'>Section visibility</h1>
+            <span className='text-sm text-gray-500'>Select which sections and content should show on your profile page.</span>
+            <div className='p-6 bg-gray-50 rounded-xl mt-4'>
+                {toggleArray.map((item) => (
+                    <ToggleLabel
+                        key={Math.random()}
+                        state={profile.visibility[item.visibityKey as keyof typeof profile.visibility]}
+                        header={item.header}
+                        sub_heading={item.sub_heading}
+                        clickHandler={() => {
+                            setProfile(prev => ({
+                                ...prev,
+                                visibility: {
+                                    ...prev.visibility,
+                                    [item.visibityKey]: !prev.visibility[item.visibityKey as keyof typeof profile.visibility]
+                                }
+                            }))
+                        }}
+                    />))}
+            </div>
+            <div className='my-10 flex justify-end'>
+                <Button variant="ghost">Cancel</Button>
+                <Button className='ml-4' onClick={saveChanges}>Save Changes</Button>
+            </div>
         </div>
     );
 };

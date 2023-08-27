@@ -30,7 +30,7 @@ export default function DashboardLayout({
           }
         </TabsList>
       </Tabs>
-      <div className="w-full sm:w-9/12">
+      <div className="w-full sm:w-9/12 h-fit">
         {children}
       </div>
     </main>

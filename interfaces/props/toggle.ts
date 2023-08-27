@@ -1,4 +1,4 @@
 export default interface ToggleProps {
     state: boolean;
-    clickHandler: () => void
+    clickHandler: React.MouseEventHandler<HTMLDivElement>
 }
