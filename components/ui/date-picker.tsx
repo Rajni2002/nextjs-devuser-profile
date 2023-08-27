@@ -30,7 +30,7 @@ export function DatePicker({ date = new Date(), setDate, label = "" }: DatePicke
                         !date && "text-muted-foreground"
                     )}
                 >
-                    {date ? format(date, "P") : <span>Pick a date</span>}
+                    {date ? format(new Date(date), "PPP") : <span>Pick a date</span>}
                     <Image src="/calendar.svg" alt="calendar" width={15} height={15} className="mr-3" />
                 </Button>
             </PopoverTrigger>

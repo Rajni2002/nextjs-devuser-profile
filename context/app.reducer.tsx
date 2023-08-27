@@ -1,5 +1,8 @@
 import { User as AppState } from "@/interfaces/user";
+import { Portfolio } from "@/types/user/portfolio";
 import { Profile } from "@/types/user/profile";
+import { Resume } from "@/types/user/resume";
+import { Social } from "@/types/user/social";
 
 export const initialState: AppState = {
     profile: {
@@ -10,7 +13,7 @@ export const initialState: AppState = {
             xp: false,
             badges: false
         },
-        profilePic: null,
+        profilePic: "",
         dob: new Date()
     },
     socials: {
@@ -31,11 +34,12 @@ export const initialState: AppState = {
 
 export enum ActionTypes {
     SET_PROFILE = "SET_PROFILE",
-    INIT_STORED = "INIT_STORED"
+    SET_SOCIAL = "SET_SOCIAL",
+    INIT_STORED = "INIT_STORED",
 }
 
 /* Pending */
 export type Action = {
     type: ActionTypes;
-    payload: Profile;
+    payload: Profile | Social | Portfolio | Resume;
 }

@@ -1,6 +1,7 @@
 "use client"
 import { Button } from "@/components/ui"
 import Chip from "@/components/ui/chip"
+import { useGlobalContext } from "@/context/app"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 
@@ -10,6 +11,7 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   const path = usePathname();
+  const [appState] = useGlobalContext();
   return (
     <>
       <header className="sm:mx-auto mt-10 rounded-2xl overflow-hidden sm:w-9/12 w-full border border-gray-200">
@@ -25,11 +27,15 @@ export default function DashboardLayout({
           <div className="sm:w-2/12 w-full flex justify-center items-center mb-20">
             <Image
               className="rounded-full sm:relative sm:bottom-28 absolute"
-              src={"https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"}
+              src={
+                appState.profile.profilePic.length !== 0 ?
+                  appState.profile.profilePic :
+                  "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"
+              }
               alt="Avtr" width={100} height={100} />
           </div>
           <div className="sm:w-10/12 w-full p-2">
-            <h1 className="text-2xl font-bold">Anna Cheng
+            <h1 className="text-2xl font-bold">{appState.profile.displayName.length ? appState.profile.displayName : "Anna Cheng"}
               <span className="text-sm px-2 py-1 bg-[#BEF264] rounded text-green-800 mx-3">Pro</span>
               <span className="text-sm px-2 py-1 bg-[#E0F2FE] rounded text-[#075985]">Looking for job</span>
             </h1>
@@ -46,8 +52,11 @@ export default function DashboardLayout({
             <hr />
             <div className="flex justify-between items-center mt-10">
               <div>
-                {["google", "Instagram", "LinkedIn", "youtube"].map((item) =>
-                  <Button key={Math.random()} className="mx-2" variant="outline" size="icon">
+                {Object.keys(appState.socials).map((item) =>
+                  <Button key={Math.random()} className="mx-2" variant="outline" size="icon" onClick={() => {
+                    window.open(
+                      appState.socials[item as keyof typeof appState.socials], "_blank");
+                  }}>
                     <Image className="" src={`/${item}.svg`} width={15} height={15} alt={item} />
                   </Button>)}
               </div>
