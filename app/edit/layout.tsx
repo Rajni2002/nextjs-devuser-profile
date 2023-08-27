@@ -12,8 +12,7 @@ export default function DashboardLayout({
 }) {
   const type = usePathname();
   const router = useRouter();
-
-
+  
   return (
     <main className="flex w-full h-screen mt-3 sm:mt-16 flex-col sm:flex-row">
       <Tabs defaultValue={type.split("/")[2]} className="w-full sm:w-3/12">

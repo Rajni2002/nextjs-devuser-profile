@@ -1,11 +1,11 @@
 "use client"
+import EditWrapper from '@/components/edit-wrapper';
 import ProfileInputs from '@/components/profile-inputs';
-import { Button } from '@/components/ui';
+import SaveButtonPair from '@/components/save-button-pair';
 import ToggleLabel from '@/components/ui/toggle-labels';
 import UploadPic from '@/components/upload-picture';
 import { useGlobalContext } from '@/context/app';
 import { ActionTypes } from '@/context/app.reducer';
-import { useLog } from '@/lib/hooks/use-log';
 import { Profile } from '@/types/user/profile';
 import React, { useEffect, useState } from 'react';
 import { SelectSingleEventHandler } from 'react-day-picker';
@@ -13,8 +13,6 @@ import { SelectSingleEventHandler } from 'react-day-picker';
 const Page = () => {
     const [appState, dispatch] = useGlobalContext();
     const [profile, setProfile] = useState<Profile>(() => appState?.profile);
-
-    useLog(profile);
 
     useEffect(() => {
         setProfile(appState?.profile)
@@ -36,11 +34,8 @@ const Page = () => {
     const onProfilePicChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         const { files } = e.target;
         if (!files) return;
-
         const reader = new FileReader();
-
         reader.readAsDataURL(files[0]);
-
         reader.addEventListener('load', () => {
             setProfile(prev => ({
                 ...prev,
@@ -69,6 +64,10 @@ const Page = () => {
         })
     }
 
+    const onCancelHandler = () => {
+        setProfile(appState.profile)
+    }
+
     const toggleArray: {
         visibityKey: string;
         header: string;
@@ -92,7 +91,7 @@ const Page = () => {
         ]
 
     return (
-        <div className='sm:px-20 sm:py-0 p-4 mb-4'>
+        <EditWrapper>
             <UploadPic onProfilePicChange={onProfilePicChange} avatarFile={profile.profilePic} resetProfileImage={resetProfileImage} />
             <ProfileInputs profile={profile} setDate={setDate} onInputChange={onInputChange} handleGenderInput={handleGenderInput} />
             <h1 className='font-bold mt-16 text-lg'>Section visibility</h1>
@@ -115,11 +114,8 @@ const Page = () => {
                         }}
                     />))}
             </div>
-            <div className='my-10 flex justify-end'>
-                <Button variant="ghost">Cancel</Button>
-                <Button className='ml-4' onClick={saveChanges}>Save Changes</Button>
-            </div>
-        </div>
+            <SaveButtonPair onSaveHandler={saveChanges} onCancelHandler={onCancelHandler} />
+        </EditWrapper>
     );
 };
 

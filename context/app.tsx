@@ -3,7 +3,8 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from '
 import ChidrenPropType from "@/interfaces/props/layouts";
 import { User as AppState } from "@/interfaces/user";
 import { Action, ActionTypes, initialState } from './app.reducer';
-import { useLog } from '@/lib/hooks/use-log';
+import { Profile } from '@/types/user/profile';
+import { Social } from '@/types/user/social';
 
 type ContextType = [AppState, (action: Action) => void];
 
@@ -11,17 +12,21 @@ const AppContext = createContext<ContextType>([initialState, () => { }]);
 
 const GlobalContext = ({ children }: ChidrenPropType) => {
     const [appState, setAppState] = useState<AppState>(initialState);
-    useLog(appState)
-
     /* Try to fix this and bring actual useReducer */
     const dispatch = ({ type, payload }: Action) => {
         switch (type) {
             case ActionTypes.SET_PROFILE:
                 setAppState(prev => {
-                    return { ...prev, profile: payload }
+                    return { ...prev, profile: payload as Profile }
                 })
                 break;
 
+            case ActionTypes.SET_SOCIAL:
+                setAppState(prev => {
+                    return { ...prev, socials: payload as Social }
+                })
+                break;
+            
             case ActionTypes.INIT_STORED:
                 setAppState(prev => {
                     return { ...prev, ...payload }
