@@ -6,7 +6,7 @@ type SectionVisibility = {
 
 
 export type Profile = {
-    profilePic: File | null;
+    profilePic: string;
     displayName: string;
     about: string;
     profession?: "Student" | "Developer" | "Other";

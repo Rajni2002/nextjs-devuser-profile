@@ -5,6 +5,7 @@ import ToggleLabel from '@/components/ui/toggle-labels';
 import UploadPic from '@/components/upload-picture';
 import { useGlobalContext } from '@/context/app';
 import { ActionTypes } from '@/context/app.reducer';
+import { useLog } from '@/lib/hooks/use-log';
 import { Profile } from '@/types/user/profile';
 import React, { useEffect, useState } from 'react';
 import { SelectSingleEventHandler } from 'react-day-picker';
@@ -12,6 +13,8 @@ import { SelectSingleEventHandler } from 'react-day-picker';
 const Page = () => {
     const [appState, dispatch] = useGlobalContext();
     const [profile, setProfile] = useState<Profile>(() => appState?.profile);
+
+    useLog(profile);
 
     useEffect(() => {
         setProfile(appState?.profile)
@@ -32,15 +35,24 @@ const Page = () => {
     }
     const onProfilePicChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         const { files } = e.target;
-        setProfile(prev => ({
-            ...prev,
-            profilePic: files ? files[0] : null
-        }))
+        if (!files) return;
+
+        const reader = new FileReader();
+
+        reader.readAsDataURL(files[0]);
+
+        reader.addEventListener('load', () => {
+            setProfile(prev => ({
+                ...prev,
+                profilePic: typeof reader.result === "string" ? reader.result : ""
+            }))
+        });
+
     }
     const resetProfileImage = () => {
         setProfile(prev => ({
             ...prev,
-            profilePic: null
+            profilePic: ""
         }))
     }
     const handleGenderInput = (value: string) => {
@@ -81,8 +93,8 @@ const Page = () => {
 
     return (
         <div className='sm:px-20 sm:py-0 p-4 mb-4'>
-            <UploadPic onProfilePicChange={onProfilePicChange} avatarFile={profile.profilePic} resetProfileImage={resetProfileImage}/>
-            <ProfileInputs profile={profile} setDate={setDate} onInputChange={onInputChange} handleGenderInput={handleGenderInput}/>
+            <UploadPic onProfilePicChange={onProfilePicChange} avatarFile={profile.profilePic} resetProfileImage={resetProfileImage} />
+            <ProfileInputs profile={profile} setDate={setDate} onInputChange={onInputChange} handleGenderInput={handleGenderInput} />
             <h1 className='font-bold mt-16 text-lg'>Section visibility</h1>
             <span className='text-sm text-gray-500'>Select which sections and content should show on your profile page.</span>
             <div className='p-6 bg-gray-50 rounded-xl mt-4'>

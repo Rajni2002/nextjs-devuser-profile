@@ -10,7 +10,7 @@ export const initialState: AppState = {
             xp: false,
             badges: false
         },
-        profilePic: null,
+        profilePic: "",
         dob: new Date()
     },
     socials: {

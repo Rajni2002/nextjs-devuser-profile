@@ -16,7 +16,7 @@ const Navbar = () => {
                 <div className='flex md:justify-between justify-evenly md:w-3/12 w-full'>
                     <Lightning className="mt-2" />
                     <Bell className="mt-2" />
-                    <Avatar className='w-10 h-10' showBadge src={appState.profile.profilePic ? URL.createObjectURL(appState.profile.profilePic) : ""} />
+                    <Avatar className='w-10 h-10' showBadge src={appState.profile.profilePic.length !== 0 ? appState.profile.profilePic : ""} />
                 </div>
             </div>
         </nav>
