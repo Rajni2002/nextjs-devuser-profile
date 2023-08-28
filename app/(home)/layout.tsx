@@ -1,5 +1,6 @@
 "use client"
 import { Button } from "@/components/ui"
+import Avatar from "@/components/ui/avatar"
 import Chip from "@/components/ui/chip"
 import { useGlobalContext } from "@/context/app"
 import Image from "next/image"
@@ -25,14 +26,14 @@ export default function DashboardLayout({
         </div>
         <div className="w-full flex sm:flex-row flex-col h-fit mb-6">
           <div className="sm:w-2/12 w-full flex justify-center items-center mb-20">
-            <Image
-              className="rounded-full sm:relative sm:bottom-28 absolute"
+            <Avatar
+              className='w-20 h-20 sm:relative sm:bottom-24 absolute'
               src={
                 appState.profile.profilePic.length !== 0 ?
                   appState.profile.profilePic :
                   "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"
               }
-              alt="Avtr" width={100} height={100} />
+            />
           </div>
           <div className="sm:w-10/12 w-full p-2">
             <h1 className="text-2xl font-bold">{appState.profile.displayName.length ? appState.profile.displayName : "Anna Cheng"}

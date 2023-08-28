@@ -1,4 +1,4 @@
-type CommonProp = {
+export type CommonProp = {
     start_date: Date;
     end_date: Date | 'Present';
     description: string;
@@ -7,15 +7,19 @@ type CommonProp = {
     avatar_url: string;
 }
 
-type Experience = CommonProp & {
+export interface EducationType {
+    degree: string;
+    college_name: string;
+}
+
+export interface ExperienceType {
     company_name: string;
     role: string;
 }
 
-type Education = CommonProp & {
-    degree: string;
-    college_name: string;
-}
+export type Experience = CommonProp & ExperienceType
+
+export type Education = CommonProp & EducationType
 
 export type NameUrlTemplate = {
     name: string;
