@@ -15,7 +15,7 @@ const Avatar = (props: AvatarPropType) => {
                 props.src?.length ? props.src : "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"
             } alt="Avtr"
                 layout='fill'
-                objectFit='contain' />
+                objectFit='cover' />
             {props.showBadge && <span className="top-0 left-7 absolute w-3 h-3 bg-green-400 rounded-full"></span>}
         </div>
     );

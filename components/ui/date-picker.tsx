@@ -16,9 +16,10 @@ type DatePicker = {
     date: Date;
     setDate: SelectSingleEventHandler;
     label?: string;
+    disabled?: boolean;
 }
 
-export function DatePicker({ date = new Date(), setDate, label = "" }: DatePicker) {
+export function DatePicker({ date = new Date(), setDate, disabled = false, label = "" }: DatePicker) {
     return (
         <Popover>
             {label !== "" && <label className="text-sm font-medium">{label}</label>}
@@ -26,9 +27,10 @@ export function DatePicker({ date = new Date(), setDate, label = "" }: DatePicke
                 <Button
                     variant="outline"
                     className={cn(
-                        "w-full mt-2 justify-between text-left font-normal",
+                        "w-full my-3 justify-between text-left font-normal",
                         !date && "text-muted-foreground"
                     )}
+                    disabled={disabled}
                 >
                     {date ? format(new Date(date), "PPP") : <span>Pick a date</span>}
                     <Image src="/calendar.svg" alt="calendar" width={15} height={15} className="mr-3" />
@@ -40,6 +42,7 @@ export function DatePicker({ date = new Date(), setDate, label = "" }: DatePicke
                     selected={date}
                     onSelect={setDate}
                     initialFocus
+                    disabled={disabled}
                 />
             </PopoverContent>
         </Popover>
