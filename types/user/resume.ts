@@ -22,8 +22,8 @@ export type Experience = CommonProp & ExperienceType
 export type Education = CommonProp & EducationType
 
 export type NameUrlTemplate = {
-    name: string;
-    url: string;
+    label: string;
+    icon: string;
 }
 
 export type Resume = {

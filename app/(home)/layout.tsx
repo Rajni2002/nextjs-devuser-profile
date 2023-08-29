@@ -40,7 +40,7 @@ export default function DashboardLayout({
               <span className="text-sm px-2 py-1 bg-[#BEF264] rounded text-green-800 mx-3">Pro</span>
               <span className="text-sm px-2 py-1 bg-[#E0F2FE] rounded text-[#075985]">Looking for job</span>
             </h1>
-            <p className="mt-3 text-gray-400 font-light">Full stack dev at codedamn | Harvard’22”</p>
+            <p className="mt-3 text-gray-400 font-light">{appState.profile.about === "" ? "" : appState.profile.about}</p>
             <p className="mt-3 text-gray-300 font-light">
               <span>
                 <Image className="inline mr-1" src="/location.svg" width={15} height={15} alt="location" />

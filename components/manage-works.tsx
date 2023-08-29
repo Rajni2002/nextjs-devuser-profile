@@ -7,12 +7,12 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Button } from './ui';
 import { Input } from './ui/input';
 import { DatePicker } from './ui/date-picker';
-import { SelectSingleEventHandler } from 'react-day-picker';
 import { Checkbox } from './ui/checkbox';
 
 type ManageWorkProps = {
     type: "work" | "education",
-    values: Education[] | Experience[]
+    values: Education[] | Experience[],
+    toAdd: boolean
 }
 const common = {
     start_date: new Date(),
@@ -57,15 +57,15 @@ const ManageWorks = (props: ManageWorkProps) => {
     return (
         <Dialog open={openDialog} onOpenChange={handleOpenDialog}>
             <div className='my-4'>
-                <h2 className="text-sm font-medium flex justify-between">
+                <h2 className="text-lg font-bold flex justify-between">
                     <span>
                         {props.type === "education" ? "Education" : "Work"}
                     </span>
-                    <DialogTrigger asChild>
+                    {props.toAdd && <DialogTrigger asChild>
                         <span className='hover:cursor-pointer'>
                             <Add />
                         </span>
-                    </DialogTrigger>
+                    </DialogTrigger>}
                 </h2>
                 {props.values.map((item) => (
                     <ResumeCard key={Math.random()} {...item} />
@@ -76,8 +76,8 @@ const ManageWorks = (props: ManageWorkProps) => {
                     <DialogTitle>Add  {props.type === "education" ? "Education" : "Work"}</DialogTitle>
                 </DialogHeader>
                 <div>
-                    <Input name={props.type === "education" ? "college_name" : "company_name"} label={props.type === "education" ? "College Name" : "Company Name"}/>
-                    <Input name={props.type === "education" ? "degree" : "role"} label={props.type === "education" ? "Degree" : "Role"}/>
+                    <Input name={props.type === "education" ? "college_name" : "company_name"} label={props.type === "education" ? "College Name" : "Company Name"} />
+                    <Input name={props.type === "education" ? "degree" : "role"} label={props.type === "education" ? "Degree" : "Role"} />
                     <Input name='location' label='Location' />
                     <Input name='website' label='Website' />
                     <Input name='avatar_url' label='Company Avatar URL' />
