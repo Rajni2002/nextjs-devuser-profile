@@ -14,7 +14,7 @@ const Chip: React.FunctionComponent<ChipProps> = (
         <span className={
             cn(className, "px-2 text-xs py-1 m-1 bg-gray-100 rounded")
         }>
-            {iconPath && <Avatar className='w-4 h-4 inline-block mr-2' src={iconPath}/>}
+            {iconPath && iconPath.length !== 0 && <Avatar className='w-4 h-4 inline-block mr-2' src={iconPath}/>}
             {children}
         </span>
     );
