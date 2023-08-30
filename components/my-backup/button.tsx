@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Loading from '../ui/circular-loading';
 import ButtonProps, { ButtonTypeClass } from '@/interfaces/props/button';
-import { cn } from '@/lib/util';
+import { cn } from '@/lib/utils';
 
 const Button: React.FunctionComponent<ButtonProps> =
     (
