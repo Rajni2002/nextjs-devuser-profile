@@ -5,6 +5,7 @@ import { User as AppState } from "@/interfaces/user";
 import { Action, ActionTypes, initialState } from './app.reducer';
 import { Profile } from '@/types/user/profile';
 import { Social } from '@/types/user/social';
+import { Education, Experience, Resume } from '@/types/user/resume';
 
 type ContextType = [AppState, (action: Action) => void];
 
@@ -26,11 +27,45 @@ const GlobalContext = ({ children }: ChidrenPropType) => {
                     return { ...prev, socials: payload as Social }
                 })
                 break;
-            
+
+            case ActionTypes.SET_RESUME:
+                setAppState(prev => {
+                    return { ...prev, resume: payload as Resume }
+                })
+                break;
+
             case ActionTypes.INIT_STORED:
                 setAppState(prev => {
                     return { ...prev, ...payload }
                 })
+                break;
+
+            case ActionTypes.ADD_RESUME_EXP:
+                setAppState(prev => (
+                    {
+                        ...prev,
+                        resume: {
+                            ...prev.resume,
+                            work_experiences: [
+                                ...prev.resume.work_experiences, payload as Experience
+                            ]
+                        }
+                    }
+                ))
+                break;
+
+            case ActionTypes.ADD_RESUME_EDU:
+                setAppState(prev => (
+                    {
+                        ...prev,
+                        resume: {
+                            ...prev.resume,
+                            education: [
+                                ...prev.resume.education, payload as Education
+                            ]
+                        }
+                    }
+                ))
                 break;
 
             default:

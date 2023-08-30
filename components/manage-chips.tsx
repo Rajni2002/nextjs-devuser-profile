@@ -39,13 +39,18 @@ const ManageChips = (props: ManageChipProps) => {
                     </PopoverTrigger>
                     <PopoverContent className='p-0 w-[200px] right-6'>
                         <Command>
-                            <CommandInput placeholder="Search" className="h-9" value={value} onValueChange={(value) => {
+                            <CommandInput addIcon toAdd={() => {
+                                if (value.length === 0) return;
+                                props.onAdd(value);
+                                setOpen(false)
+                                setValue("");
+                            }} placeholder="Search" className="h-9" value={value} onValueChange={(value) => {
                                 setValue(value);
                             }} onKeyDown={(e) => {
-                                console.log(e.code);
                                 if (e.code === "Enter") {
                                     props.onAdd(value);
                                     setOpen(false)
+                                    setValue("");
                                 }
                             }} />
                             {props.options &&

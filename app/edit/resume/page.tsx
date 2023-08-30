@@ -2,16 +2,18 @@
 import EditWrapper from '@/components/edit-wrapper';
 import ManageChips from '@/components/manage-chips';
 import ManageWorks from '@/components/manage-works';
+import SaveButtonPair from '@/components/save-button-pair';
 import { Input } from '@/components/ui/input';
 import { useGlobalContext } from '@/context/app';
+import { ActionTypes } from '@/context/app.reducer';
 import lang from '@/data/lang';
 import skillList from '@/data/skills';
 import { NameUrlTemplate, Resume } from '@/types/user/resume';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 const Page = () => {
-    const [appState] = useGlobalContext();
+    const [appState, dispatch] = useGlobalContext();
     const [resume, setResume] = useState<Resume>(() => appState?.resume);
     const onAdd = (name: "tech_skills" | "languages" | "interests", item: NameUrlTemplate | string) => {
         if (typeof item === "string" && name === "interests") {
@@ -31,17 +33,20 @@ const Page = () => {
                 : [...prev[name], item]
         }))
     }
+    useEffect(() => {
+        setResume(appState.resume);
+    }, [appState])
     return (
         <EditWrapper>
-            <Input name='about_me' label='About me' value={resume.about_me} onChange={(e) => {
+            <Input name='about_me' className='' label='About me' value={resume.about_me} onChange={(e) => {
                 const { name, value } = e.target;
                 setResume(prev => ({
                     ...prev,
                     [name]: value
                 }))
             }} />
-            <ManageWorks toAdd type="work" values={resume.work_experiences} />
-            <ManageWorks toAdd type="education" values={resume.education} />
+            <ManageWorks toAdd type="work" values={resume.work_experiences} dispatch={dispatch} />
+            <ManageWorks toAdd type="education" values={resume.education} dispatch={dispatch} />
             <ManageChips label='Tech skills' withIcon toAdd values={resume.tech_skills} options={skillList} onAdd={(item) => {
                 onAdd("tech_skills", item)
             }} />
@@ -50,6 +55,14 @@ const Page = () => {
             }} />
             <ManageChips label='Languages' withIcon toAdd values={resume.languages} options={lang} onAdd={(item) => {
                 onAdd("languages", item)
+            }} />
+            <SaveButtonPair onSaveHandler={() => {
+                dispatch({
+                    type: ActionTypes.SET_RESUME,
+                    payload: resume
+                })
+            }} onCancelHandler={() => {
+                setResume(appState.resume)
             }} />
         </EditWrapper>
     );
